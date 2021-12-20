@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PBL4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FileDetail">
+    <Key>
+      <PropertyRef Name="FileID" />
+    </Key>
+    <Property Name="FileID" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Link" Type="nvarchar" MaxLength="255" />
+    <Property Name="Time" Type="nvarchar" MaxLength="255" />
+    <Property Name="FolderID" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Folder">
+    <Key>
+      <PropertyRef Name="FolderID" />
+    </Key>
+    <Property Name="FolderID" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Time" Type="nvarchar" MaxLength="255" />
+    <Property Name="Type" Type="nvarchar" MaxLength="255" />
+    <Property Name="UserID" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Detail" Type="nvarchar" MaxLength="255" />
+    <Property Name="Status" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK__FileDetai__Folde__3B75D760">
+    <End Role="Folder" Type="Self.Folder" Multiplicity="0..1" />
+    <End Role="FileDetail" Type="Self.FileDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Folder">
+        <PropertyRef Name="FolderID" />
+      </Principal>
+      <Dependent Role="FileDetail">
+        <PropertyRef Name="FolderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Folder__UserID__38996AB5">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Folder" Type="Self.Folder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Folder">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PBL4ModelStoreContainer">
+    <EntitySet Name="FileDetail" EntityType="Self.FileDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Folder" EntityType="Self.Folder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__FileDetai__Folde__3B75D760" Association="Self.FK__FileDetai__Folde__3B75D760">
+      <End Role="Folder" EntitySet="Folder" />
+      <End Role="FileDetail" EntitySet="FileDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Folder__UserID__38996AB5" Association="Self.FK__Folder__UserID__38996AB5">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Folder" EntitySet="Folder" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
